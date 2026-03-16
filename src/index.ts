@@ -36,29 +36,53 @@ server.post("/users", async (req: Request, res: Response) => {
   }
 });
 
-// server.put("/users/:id", async (req: Request, res: Response) => {
-//   const { id } = req.params;
+server.put("/users/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
 
-//   const { email, password, age } = req.body;
+  const { email } = req.body;
 
-//   try {
-//     const user = await prisma.user.upsert({
-//       where: { id: 1 },
-//       update: { age: 20 },
-//       create: { id: 1, age: 30 },
-//     });
+  try {
+    const userId = await prisma.user.update({
+      where: { id: Number(id) },
+      data: { email },
+    });
 
-//     res.status(200).json([user]);
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
+    res.status(200).json(userId);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 server.get("/categories", async (req: Request, res: Response) => {
   const categories = await prisma.foodCategory.findMany({
     include: { foods: true },
   });
   res.json(categories);
+});
+
+server.put("/categories/:id", async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  try {
+    const categori = await prisma.foodCategory.update({
+      where: { id: Number(id) },
+      data: { name },
+    });
+    res.status(200).json([categori]);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+server.get("/foods", async (req: Request, res: Response) => {
+  const foods = await prisma.food.findMany({
+    include: {
+      category: true,
+    },
+  });
+
+  res.json(foods);
 });
 
 server.listen(port, () => {

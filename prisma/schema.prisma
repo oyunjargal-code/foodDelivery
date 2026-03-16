@@ -13,6 +13,7 @@ model User {
   email    String  @unique
   password String
   age      Int?
+  phoneNumber String
 }
 
 model Food {
@@ -21,7 +22,7 @@ model Food {
   price String
   category FoodCategory @relation(fields: [foodCategoyId], references: [id] )
  foodCategoyId Int
-
+// foodOrderItems FoodOrderItems[]
  createdAt DateTime @default(now())
  updatedAt DateTime @updatedAt
  }
@@ -34,3 +35,25 @@ model Food {
   createdAt DateTime @default(now())
  updatedAt DateTime @updatedAt 
  }
+
+//  model FoodOrder {
+//  id       Int     @id @default(autoincrement())
+//   totalPrice String
+//   status String
+//   FoodOrderItems FoodOrderItems[]
+//   foods Food[]
+
+//   createdAt DateTime @default(now())
+//  updatedAt DateTime @updatedAt 
+//  }
+
+//   model FoodOrderItme {
+//  id       Int     @id @default(autoincrement())
+//  quantity Int
+//  food Food @relation(fields: [foodId], references: [id])
+//  foodId Int
+//  order FoodOrder @relation(fields: [foodOrderId], references: [id])
+//  foodOrderId Int
+//   createdAt DateTime @default(now())
+//  updatedAt DateTime @updatedAt 
+//  }  
