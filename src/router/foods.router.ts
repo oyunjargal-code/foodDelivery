@@ -6,12 +6,12 @@ import { updateFood } from "../controller/foods/update-food";
 
 const router = express.Router();
 
-router.get("/foods", getFoods);
+router.get("/", getFoods);
 
-router.get("/foods/:id", getFoodById);
+router.get("/:id", getFoodById);
 
-router.post("/foods", createFood);
+router.post("/", createFood);
 
-router.put("/foods/:id", updateFood);
+router.put("/:id", updateFood);
 
 export default router;

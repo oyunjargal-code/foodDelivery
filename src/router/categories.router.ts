@@ -1,17 +1,17 @@
 import express, { Request, Response } from "express";
-import { getUsers } from "../controller/users/get-users";
 import { getCategoryById } from "../controller/categories/get-categoryById";
 import { createCategory } from "../controller/categories/create-category";
 import { updateCategory } from "../controller/categories/update-category";
+import { getCategory } from "../controller/categories/get-category";
 
 const router = express.Router();
 
-router.get("/categories", getUsers);
+router.get("/", getCategory);
 
-router.get("/categories/:id", getCategoryById);
+router.get("/:id", getCategoryById);
 
-router.post("/categories", createCategory);
+router.post("/", createCategory);
 
-router.put("/categories/:id", updateCategory);
+router.put("/:id", updateCategory);
 
 export default router;

@@ -3,15 +3,16 @@ import { getUsers } from "../controller/users/get-users";
 import { getUserById } from "../controller/users/get-userById";
 import { createUser } from "../controller/users/create-user";
 import { updateUser } from "../controller/users/update-user";
+import { addOrder } from "../controller/orders/add-order";
 
 const router = express.Router();
 
-router.get("/", getUsers);
+router.post("/", addOrder);
 
-router.get("/:id", getUserById);
+// router.get("/:id", getUserById);
 
-router.post("/", createUser);
+// router.post("/", createUser);
 
-router.put("/:id", updateUser);
+// router.put("/:id", updateUser);
 
 export default router;

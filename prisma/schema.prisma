@@ -5,55 +5,54 @@ generator client {
 
 datasource db {
   provider = "postgresql"
- 
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  password String
-  age      Int?
+  id          Int    @id @default(autoincrement())
+  email       String @unique
+  password    String
+  age         Int?
   phoneNumber String
 }
 
 model Food {
-  id       Int     @id @default(autoincrement())
-  name String
-  price String
-  category FoodCategory @relation(fields: [foodCategoyId], references: [id] )
- foodCategoyId Int
-// foodOrderItems FoodOrderItems[]
- createdAt DateTime @default(now())
- updatedAt DateTime @updatedAt
- }
+  id             Int              @id @default(autoincrement())
+  name           String
+  price          String
+  category       FoodCategory     @relation(fields: [foodCategoyId], references: [id])
+  foodCategoyId  Int
+  // foodOrderItems FoodOrderItems[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  foodOrderItems FoodOrderItems[]
+}
 
- model FoodCategory {
- id       Int     @id @default(autoincrement())
-  name String
+model FoodCategory {
+  id    Int    @id @default(autoincrement())
+  name  String
   foods Food[]
 
   createdAt DateTime @default(now())
- updatedAt DateTime @updatedAt 
- }
+  updatedAt DateTime @updatedAt
+}
 
-//  model FoodOrder {
-//  id       Int     @id @default(autoincrement())
-//   totalPrice String
-//   status String
-//   FoodOrderItems FoodOrderItems[]
-//   foods Food[]
+model FoodOrder {
+  id             Int              @id @default(autoincrement())
+  totalPrice     String
+  status         String
+  foodOrderItems FoodOrderItems[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
 
-//   createdAt DateTime @default(now())
-//  updatedAt DateTime @updatedAt 
-//  }
+model FoodOrderItems {
+  id       Int  @id @default(autoincrement())
+  foodId   Int
+  food     Food @relation(fields: [foodId], references: [id])
+  quantity Int
 
-//   model FoodOrderItme {
-//  id       Int     @id @default(autoincrement())
-//  quantity Int
-//  food Food @relation(fields: [foodId], references: [id])
-//  foodId Int
-//  order FoodOrder @relation(fields: [foodOrderId], references: [id])
-//  foodOrderId Int
-//   createdAt DateTime @default(now())
-//  updatedAt DateTime @updatedAt 
-//  }  
+  order       FoodOrder @relation(fields: [foodOrderId], references: [id])
+  foodOrderId Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
