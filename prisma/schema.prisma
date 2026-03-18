@@ -13,6 +13,8 @@ model User {
   password    String
   age         Int?
   phoneNumber String @default("Null")
+
+  orders FoodOrder[]
 }
 
 model Food {
@@ -37,7 +39,10 @@ model FoodCategory {
 }
 
 model FoodOrder {
-  id             Int              @id @default(autoincrement())
+  id     Int @id @default(autoincrement())
+  userId Int
+
+  user           User             @relation(fields: [userId], references: [id])
   totalPrice     String
   status         String
   foodOrderItems FoodOrderItems[]
@@ -46,10 +51,12 @@ model FoodOrder {
 }
 
 model FoodOrderItems {
-  id       Int  @id @default(autoincrement())
-  foodId   Int
-  food     Food @relation(fields: [foodId], references: [id])
+  id Int @id @default(autoincrement())
+
   quantity Int
+
+  foodId Int
+  food   Food @relation(fields: [foodId], references: [id])
 
   order       FoodOrder @relation(fields: [foodOrderId], references: [id])
   foodOrderId Int
