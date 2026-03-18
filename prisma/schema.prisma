@@ -63,3 +63,17 @@ model FoodOrderItems {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
+
+model Nom {
+  id       Int     @id @default(autoincrement())
+  ner      String
+  une      String
+  hevlelID Int
+  hevlel   Hevlelt @relation(fields: [hevlelID], references: [id])
+}
+
+model Hevlelt {
+  id   Int    @id @default(autoincrement())
+  ner  String
+  noms Nom[]
+}
