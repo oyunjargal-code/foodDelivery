@@ -8,12 +8,19 @@ datasource db {
 }
 
 model User {
-  id          Int    @id @default(autoincrement())
-  email       String @unique
+  id          Int      @id @default(autoincrement())
+  email       String   @unique
   password    String
-  age         Int?
-  phoneNumber String @default("Null")
+  phoneNumber String   @default("Null")
+  address     String
+  role        UserRole @default(USER)
 
+  ttl        DateTime
+  isVerifies Boolean
+  createdAt  DateTime
+  updatedAt  DateTime
+
+  // role        Role        @default(USER)
   orders FoodOrder[]
 }
 
@@ -44,7 +51,7 @@ model FoodOrder {
 
   user           User             @relation(fields: [userId], references: [id])
   totalPrice     String
-  status         String
+  status         Status           @default(PENDING)
   foodOrderItems FoodOrderItems[]
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
@@ -76,4 +83,20 @@ model Hevlelt {
   id   Int    @id @default(autoincrement())
   ner  String
   noms Nom[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  PENDING
+  CANCELED
+  DELIVERED
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }

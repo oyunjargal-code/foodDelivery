@@ -1,6 +1,5 @@
 import express from "express";
 import { Request, Response } from "express";
-import { prisma } from "./lib/prisma";
 import usersRouter from "./router/users.router";
 import categoriesRouter from "./router/categories.router";
 import foodsRouter from "./router/foods.router";
