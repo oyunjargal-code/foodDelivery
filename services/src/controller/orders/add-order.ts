@@ -20,7 +20,7 @@ export const addOrder = async (req: Request, res: Response) => {
     const order = await prisma.foodOrder.create({
       data: {
         userId,
-        status: "pending",
+        status: "PENDING",
         totalPrice: totalPrice,
         foodOrderItems: {
           create: orderItems,

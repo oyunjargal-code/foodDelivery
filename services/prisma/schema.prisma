@@ -12,25 +12,28 @@ model User {
   email       String   @unique
   password    String
   phoneNumber String   @default("Null")
-  address     String
+  address     String   @default("")
   role        UserRole @default(USER)
 
-  ttl        DateTime
-  isVerifies Boolean
-  createdAt  DateTime
-  updatedAt  DateTime
+  ttl        DateTime?
+  isVerifies Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now()) @updatedAt
 
   // role        Role        @default(USER)
   orders FoodOrder[]
 }
 
 model Food {
-  id             Int              @id @default(autoincrement())
-  name           String
-  price          String
-  category       FoodCategory     @relation(fields: [foodCategoyId], references: [id])
-  foodCategoyId  Int
-  // foodOrderItems FoodOrderItems[]
+  id          Int    @id @default(autoincrement())
+  name        String
+  price       String
+  image       String @default("")
+  ingredients String @default("")
+
+  category      FoodCategory @relation(fields: [foodCategoyId], references: [id])
+  foodCategoyId Int
+
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   foodOrderItems FoodOrderItems[]
@@ -69,20 +72,6 @@ model FoodOrderItems {
   foodOrderId Int
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-}
-
-model Nom {
-  id       Int     @id @default(autoincrement())
-  ner      String
-  une      String
-  hevlelID Int
-  hevlel   Hevlelt @relation(fields: [hevlelID], references: [id])
-}
-
-model Hevlelt {
-  id   Int    @id @default(autoincrement())
-  ner  String
-  noms Nom[]
 }
 
 enum Role {
