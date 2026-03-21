@@ -1,3 +1,5 @@
+import Headers from "./_components/Headers";
+
 export interface GetCategoriesResponse {
   categories: Category[];
 }
@@ -27,6 +29,7 @@ export default async function Home() {
 
   return (
     <div>
+      <Headers />
       <div>
         <h1>Food Delivery</h1>
       </div>
