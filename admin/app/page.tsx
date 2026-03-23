@@ -8,22 +8,25 @@ import {
   SidebarHeader,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import { getCategories } from "@/src/lib/getCategories";
 import { LayoutDashboard, Van } from "lucide-react";
 
-export default function Home() {
-  const categories = [
-    { label: "All Dishes", count: 112 },
-    { label: "Appetizers", count: 6 },
-    { label: "Salads", count: 3 },
-    { label: "Pizzas", count: 5 },
-    { label: "Lunch favorites", count: 6 },
-    { label: "Main dishes", count: 5 },
-    { label: "Fish & Sea foods", count: 5 },
-    { label: "Brunch", count: 5 },
-    { label: "Side dish ", count: 5 },
-    { label: "Desserts", count: 5 },
-    { label: "Beverages", count: 5 },
-  ];
+export default async function Home() {
+  // const categoriesData = [
+  //   { label: "All Dishes", count: 112 },
+  //   { label: "Appetizers", count: 6 },
+  //   { label: "Salads", count: 3 },
+  //   { label: "Pizzas", count: 5 },
+  //   { label: "Lunch favorites", count: 6 },
+  //   { label: "Main dishes", count: 5 },
+  //   { label: "Fish & Sea foods", count: 5 },
+  //   { label: "Brunch", count: 5 },
+  //   { label: "Side dish ", count: 5 },
+  //   { label: "Desserts", count: 5 },
+  //   { label: "Beverages", count: 5 },
+  // ];
+
+  const categories = await getCategories();
 
   return (
     <div className="flex gap-4">
@@ -70,8 +73,8 @@ export default function Home() {
         <h1>Dishes category</h1>
         <div className="flex gap-2">
           {categories.map((category) => (
-            <Button key={category.label} variant="outline">
-              {category.label}
+            <Button key={category.id} variant="outline">
+              {category.name}
               <Badge variant="default">{category.count}</Badge>
             </Button>
           ))}
