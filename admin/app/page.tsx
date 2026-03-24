@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/sidebar";
 import { getCategories } from "@/src/lib/getCategories";
 import { LayoutDashboard, Van } from "lucide-react";
+import Link from "next/link";
 
 export default async function Home() {
   // const categoriesData = [
@@ -26,11 +27,11 @@ export default async function Home() {
   //   { label: "Beverages", count: 5 },
   // ];
 
-  const categories = await getCategories();
+  // const categories = await getCategories();
 
   return (
     <div className="flex gap-4">
-      <div>
+      {/* <div>
         <SidebarProvider className="bg-[#FFFFFF]">
           <Sidebar style={{ backgroundColor: "white" }}>
             <SidebarHeader>
@@ -68,17 +69,23 @@ export default async function Home() {
             <SidebarFooter>Hul</SidebarFooter>
           </Sidebar>
         </SidebarProvider>
-      </div>
+      </div> */}
       <div>
         <h1>Dishes category</h1>
-        <div className="flex gap-2">
+        <input type="text" className="border border-gray-300" />
+        <Link href="/dashboard/foods">
+          <button>Login</button>
+        </Link>
+        {/* <div className="flex gap-2">
           {categories.map((category) => (
             <Button key={category.id} variant="outline">
               {category.name}
-              <Badge variant="default">{category.count}</Badge>
+              <Badge variant="default" className="text-white">
+                {category.foods.map((food) => food.id)}
+              </Badge>
             </Button>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
