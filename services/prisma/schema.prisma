@@ -84,8 +84,3 @@ enum Status {
   CANCELED
   DELIVERED
 }
-
-enum UserRole {
-  USER
-  ADMIN
-}
