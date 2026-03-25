@@ -32,7 +32,7 @@ export default async function Home() {
   return (
     <div className="flex gap-4">
       <div>
-        <h1 className="text-[20px] font-semibol ">Dishes category</h1>
+        <h1>Dishes category</h1>
         <input type="text" className="border border-gray-300" />
         <Link href="/dashboard/foods">
           <button>Login</button>
