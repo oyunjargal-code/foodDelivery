@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AddCategory } from "./AddCategory";
 
 export interface GetCategoriesResponse {
   categories: Category[];
@@ -29,7 +30,7 @@ export async function Categories() {
   const { categories }: GetCategoriesResponse = await data.json();
 
   return (
-    <div>
+    <div className="flex flex-wrap gap-4 justify-center">
       {categories.map((category) => (
         <Button key={category.id} variant="outline">
           {category.name}
@@ -38,6 +39,7 @@ export async function Categories() {
           </Badge>
         </Button>
       ))}
+      <AddCategory />
     </div>
   );
 }

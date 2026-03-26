@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ChangeEventHandler, useState } from "react";
 
-export function AddCategory() {
+export function AddAppetizers() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
