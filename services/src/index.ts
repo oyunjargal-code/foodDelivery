@@ -1,11 +1,12 @@
 import express from "express";
-import { Request, Response } from "express";
+import cors from "cors";
 import usersRouter from "./router/users.router";
 import categoriesRouter from "./router/categories.router";
 import foodsRouter from "./router/foods.router";
 import ordersRouter from "./router/orders.router";
 
 const server = express();
+server.use(cors({ origin: "http://localhost:3000" }));
 const port = 3001;
 
 server.use(express.json());
