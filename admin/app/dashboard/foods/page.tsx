@@ -12,6 +12,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Category, getgetCategories } from "@/lib/services/getgetcategories";
+import { getCategories } from "@/src/lib/getCategories";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default async function FoodsPage() {
   return (
@@ -27,7 +38,9 @@ export default async function FoodsPage() {
   );
 }
 
-export function FoodAddDialog() {
+export async function FoodAddDialog() {
+  const categories = await getgetCategories();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -54,10 +67,30 @@ export function FoodAddDialog() {
             <p className="text-sm">Dish category</p>
           </div>
           <div>
+            <CategoriesSelect categories={categories} />
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <div>
+            <p className="text-sm">Ingredients</p>
+          </div>
+          <div>
             <Input
               className="w-[288px] h-[36px]"
               type="text"
-              placeholder="Food name"
+              placeholder="Fluffy pancakes..."
+            />
+          </div>
+        </div>
+        <div className="flex justify-between">
+          <div>
+            <p className="text-sm">Price</p>
+          </div>
+          <div>
+            <Input
+              className="w-[288px] h-[36px]"
+              type="number"
+              placeholder="Price"
             />
           </div>
         </div>
@@ -68,5 +101,36 @@ export function FoodAddDialog() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
+  );
+}
+
+type CategoriesSelectProps = {
+  categories: Category[];
+};
+
+export function CategoriesSelect(props: CategoriesSelectProps) {
+  const { categories } = props;
+
+  console.log(categories);
+  return (
+    <div className="w-[288px] h-[36px]">
+      <Select>
+        <SelectTrigger className="w-full max-w-48">
+          <SelectValue placeholder="Select a fruit" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Categories</SelectLabel>
+            {categories.map((category) => {
+              return (
+                <SelectItem key={category.id} value={String(category.id)}>
+                  {category.name}
+                </SelectItem>
+              );
+            })}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
   );
 }
