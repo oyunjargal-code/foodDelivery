@@ -111,7 +111,7 @@ type CategoriesSelectProps = {
 export function CategoriesSelect(props: CategoriesSelectProps) {
   const { categories } = props;
 
-  console.log(categories);
+  // console.log(categories);
   return (
     <div className="w-[288px] h-[36px]">
       <Select>
