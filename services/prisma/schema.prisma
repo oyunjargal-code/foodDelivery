@@ -8,12 +8,12 @@ datasource db {
 }
 
 model User {
-  id          Int      @id @default(autoincrement())
-  email       String   @unique
+  id          Int    @id @default(autoincrement())
+  email       String @unique
   password    String
-  phoneNumber String   @default("Null")
-  address     String   @default("")
-  role        UserRole @default(USER)
+  phoneNumber String @default("Null")
+  address     String @default("")
+  role        Role   @default(USER)
 
   ttl        DateTime?
   isVerifies Boolean   @default(false)
