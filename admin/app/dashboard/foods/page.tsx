@@ -23,12 +23,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { FoodCards } from "./_components/FoodCards";
 
 export default async function FoodsPage() {
   return (
     <div className="w-full">
       <div className="w-[1171px] min-h-[176px] mx-auto rounded-2xl bg-white flex justify-center items-center">
         <Categories />
+      </div>
+      <div>
+        <FoodCards />
       </div>
       <div>{/* <Foods /> */}</div>
       <div>
@@ -114,23 +118,25 @@ export function CategoriesSelect(props: CategoriesSelectProps) {
   // console.log(categories);
   return (
     <div className="w-[288px] h-[36px]">
-      <Select>
-        <SelectTrigger className="w-full max-w-48">
-          <SelectValue placeholder="Select a fruit" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Categories</SelectLabel>
-            {categories.map((category) => {
-              return (
-                <SelectItem key={category.id} value={String(category.id)}>
-                  {category.name}
-                </SelectItem>
-              );
-            })}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <div>
+        <Select>
+          <SelectTrigger className="w-full max-w-48">
+            <SelectValue placeholder="Select a fruit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Categories</SelectLabel>
+              {categories.map((category) => {
+                return (
+                  <SelectItem key={category.id} value={String(category.id)}>
+                    {category.name}
+                  </SelectItem>
+                );
+              })}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+      </div>
     </div>
   );
 }
