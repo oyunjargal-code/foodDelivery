@@ -1,50 +1,14 @@
-// import { AddAppetizers } from "./AddAppetizers";
-
-// export interface Food {
-//   id: number;
-//   name: string;
-//   price: string;
-//   image: string;
-//   ingredients: string;
-//   foodCategoyId: number;
-//   createdAt: string;
-//   updatedAt: string;
-//   category: Category;
-// }
-
-// export interface Category {
-//   id: number;
-//   name: string;
-//   createdAt: string;
-//   updatedAt: string;
-// }
-
-// export async function FoodCards() {
-//   const data = await fetch("http://localhost:3001/foods");
-//   const foods: Food[] = await data.json();
-
-//   return (
-//     <div className="flex flex-wrap gap-4 justify-center">
-//       {foods.map((food) => (
-//         <div className="w-20 h-20 rounded-2xl border bg-zinc-100" key={food.id}>
-//           <div>{food.name}</div>
-//         </div>
-//       ))}
-//       <AddAppetizers />
-//     </div>
-//   );
-// }
-
 import { Badge } from "@/components/ui/badge";
-
 import {
   Card,
   CardAction,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { FoodAddDialog } from "./FoodAddDialog";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
 
 export interface FoodCardsProps {
   foods: Foods[];
@@ -74,7 +38,10 @@ export async function FoodCards() {
   const foods: Foods[] = await data.json();
 
   return (
-    <div className="flex flex-wrap gap-4 justify-center">
+    <div className="gap-4 justify-center grid grid-cols-4">
+      <Card className="relative mx-auto w-full max-w-sm pt-0">
+        <FoodAddDialog />
+      </Card>
       {foods.map((food) => (
         <Card className="relative mx-auto w-full max-w-sm pt-0">
           <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
