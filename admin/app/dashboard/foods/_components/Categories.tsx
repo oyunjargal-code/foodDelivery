@@ -1,31 +1,36 @@
-import { CategoriesClient } from "./CategoriesClient";
+"use client";
 
-export interface GetCategoriesResponse {
-  categories: Category[];
-}
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { AddCategory } from "./AddCategory";
+import { useState } from "react";
+import { Category } from "./types";
 
-export interface Category {
-  id: number;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  foods: Food[];
-}
+export function Categories({ categories }: { categories: Category[] }) {
+  const [select, setSelect] = useState<Number | null>(null);
 
-export interface Food {
-  id: number;
-  name: string;
-  price: string;
-  image: string;
-  ingredients: string;
-  foodCategoyId: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export async function Categories() {
-  const data = await fetch("http://localhost:3001/categories");
-  const { categories }: GetCategoriesResponse = await data.json();
-
-  return <CategoriesClient categories={categories} />;
+  return (
+    <div className="flex flex-wrap gap-4 justify-center">
+      <Button variant="outline">
+        All Dishes{" "}
+        <Badge variant="default" className="text-white">
+          {" "}
+          112
+        </Badge>
+      </Button>
+      {categories.map((category) => (
+        <Button
+          key={category.id}
+          variant="outline"
+          onClick={() => setSelect(category.id)}
+        >
+          {category.name}
+          <Badge variant="default" className="text-white">
+            {category.foods?.length || 0}
+          </Badge>
+        </Button>
+      ))}
+      <AddCategory />
+    </div>
+  );
 }

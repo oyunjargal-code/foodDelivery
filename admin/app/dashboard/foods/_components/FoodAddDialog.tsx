@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,9 +23,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Plus } from "lucide-react";
+import { useState } from "react";
 
-export async function FoodAddDialog() {
-  const categories = await getgetCategories();
+export function FoodAddDialog() {
+  const categories = getgetCategories();
+
+  const [food, setFood] = useState({});
+
+  const handleChange = (e) => {
+    console.log(e.target.value);
+  };
 
   return (
     <div>
@@ -51,6 +59,7 @@ export async function FoodAddDialog() {
                 className="w-[288px] h-[36px]"
                 type="text"
                 placeholder="Food name"
+                onChange={handleChange}
               />
             </div>
           </div>

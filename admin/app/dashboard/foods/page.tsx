@@ -1,15 +1,19 @@
 import { Categories } from "./_components/Categories";
 
-import { FoodCards } from "./_components/FoodCards";
+import { CategoriesList } from "./_components/CategoriesList";
+import { Category, GetCategoriesResponse } from "./_components/types";
 
 export default async function FoodsPage() {
+  const data = await fetch("http://localhost:3001/categories");
+  const { categories }: GetCategoriesResponse = await data.json();
+
   return (
     <div className="w-full">
       <div className="w-[1171px] min-h-[176px] mx-auto rounded-2xl bg-white flex justify-center items-center">
-        <Categories />
+        <Categories categories={categories} />
       </div>
       <div className="w-[1171px] min-h-[176px] flex mx-auto rounded-2xl bg-white justify-center items-center my-4">
-        <FoodCards />
+        <CategoriesList categories={categories} />
       </div>
     </div>
   );
