@@ -12,9 +12,8 @@ export function Categories({ categories }: { categories: Category[] }) {
   return (
     <div className="flex flex-wrap gap-4 justify-center">
       <Button variant="outline">
-        All Dishes{" "}
+        All Dishes
         <Badge variant="default" className="text-white">
-          {" "}
           112
         </Badge>
       </Button>

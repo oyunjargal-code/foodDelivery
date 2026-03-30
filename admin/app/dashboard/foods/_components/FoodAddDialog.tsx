@@ -1,5 +1,7 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import {
   Dialog,
   DialogClose,
@@ -11,8 +13,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 
-import { Category, getgetCategories } from "@/lib/services/getgetcategories";
-
 import {
   Select,
   SelectContent,
@@ -22,16 +22,52 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus } from "lucide-react";
+import { LoaderCircle, Plus } from "lucide-react";
 import { useState } from "react";
+import { Category } from "./types";
 
-export function FoodAddDialog() {
-  const categories = getgetCategories();
+type FoodAddDialogProps = {
+  categories: Category[];
+};
 
+export function FoodAddDialog({ categories }: FoodAddDialogProps) {
   const [food, setFood] = useState({});
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
+  const [categoryName, setCategoryName] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (event) => {
+    console.log(event.target.value);
+  };
+
+  const onAddCategory = async () => {
+    if (!categoryName) {
+      console.log("Нэр хоосон байна!");
+      return;
+    }
+
+    setLoading(true);
+    const postBody = {
+      name: categoryName,
+    };
+    try {
+      await fetch("http://localhost:3001/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(postBody),
+      });
+      setOpen(false);
+      router.refresh();
+    } catch (error) {
+      setError(error as string);
+      console.log(error);
+    }
+    setLoading(false);
   };
 
   return (
@@ -80,6 +116,7 @@ export function FoodAddDialog() {
                 className="w-[288px] h-[36px]"
                 type="text"
                 placeholder="Fluffy pancakes..."
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -95,10 +132,17 @@ export function FoodAddDialog() {
               />
             </div>
           </div>
-          <DialogFooter className="sm:justify-start">
+          <DialogFooter className="sm:justify-between">
             <DialogClose asChild>
               <Button type="button">Close</Button>
             </DialogClose>
+            <Button type="button" onClick={onAddCategory} disabled={loading}>
+              {loading ? (
+                <LoaderCircle className="animate-spin" />
+              ) : (
+                "Add category"
+              )}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

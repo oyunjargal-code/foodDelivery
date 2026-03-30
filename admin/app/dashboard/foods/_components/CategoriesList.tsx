@@ -8,8 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FoodAddDialog } from "./FoodAddDialog";
-
-import { Category, Food } from "./types";
+import { Category } from "./types";
 
 export function CategoriesList({ categories }: { categories: Category[] }) {
   return (
@@ -21,13 +20,17 @@ export function CategoriesList({ categories }: { categories: Category[] }) {
               {category.name} ({category.foods.length})
             </h2>
           </div>
-          <div className="flex">
-            <Card className="relative mx-auto w-full max-w-sm pt-0">
-              <FoodAddDialog />
+          <div className="flex gap-4">
+            <Card className="w-[270.75px] h-[241px] relative mx-auto pt-0 flex flex-col items-center justify-center">
+              <FoodAddDialog categories={categories} />
+              <p className="text-sm">Add new Dish to {category.name} </p>
             </Card>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-3 gap-2">
               {category.foods.map((food) => (
-                <Card className="relative mx-auto w-full max-w-sm pt-0">
+                <Card
+                  key={food.id}
+                  className="relative mx-auto pt-0 w-[270.75px] h-[241px]"
+                >
                   <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
                   <img
                     src="https://avatar.vercel.sh/shadcn1"

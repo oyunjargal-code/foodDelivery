@@ -1,11 +1,11 @@
+import { getCategories } from "@/lib/services/getgetcategories";
 import { Categories } from "./_components/Categories";
 
 import { CategoriesList } from "./_components/CategoriesList";
 import { Category, GetCategoriesResponse } from "./_components/types";
 
 export default async function FoodsPage() {
-  const data = await fetch("http://localhost:3001/categories");
-  const { categories }: GetCategoriesResponse = await data.json();
+  const categories = await getCategories();
 
   return (
     <div className="w-full">
