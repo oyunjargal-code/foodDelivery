@@ -23,15 +23,28 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LoaderCircle, Plus } from "lucide-react";
-import { useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
 import { Category } from "./types";
 
 type FoodAddDialogProps = {
   categories: Category[];
 };
 
+type Food = {
+  foodName: string;
+  price: string;
+  categoryId: null | string;
+  ingredients: String;
+};
+
 export function FoodAddDialog({ categories }: FoodAddDialogProps) {
-  const [food, setFood] = useState({});
+  const [food, setFood] = useState<Food>({
+    foodName: "",
+    price: "",
+    categoryId: null,
+    ingredients: ",",
+  });
+  console.log(food);
 
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -39,22 +52,22 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
   const [categoryName, setCategoryName] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (event) => {
-    console.log(event.target.value);
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setFood({ ...food, [event.target.name]: event.target.value });
   };
 
   const onAddCategory = async () => {
-    if (!categoryName) {
-      console.log("Нэр хоосон байна!");
-      return;
-    }
-
     setLoading(true);
+
     const postBody = {
-      name: categoryName,
+      name: food.foodName,
+      price: food.price,
+      foodCategoyId: food.categoryId,
+      ingredients: food.ingredients,
     };
+
     try {
-      await fetch("http://localhost:3001/categories", {
+      await fetch("http://localhost:3001/foods", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,6 +81,10 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
       console.log(error);
     }
     setLoading(false);
+  };
+
+  const onSelectCategory = (categoryId: string) => {
+    setFood({ ...food, categoryId: categoryId });
   };
 
   return (
@@ -96,6 +113,7 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
                 type="text"
                 placeholder="Food name"
                 onChange={handleChange}
+                name="foodName"
               />
             </div>
           </div>
@@ -104,7 +122,10 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
               <p className="text-sm">Dish category</p>
             </div>
             <div>
-              <CategoriesSelect categories={categories} />
+              <CategoriesSelect
+                categories={categories}
+                onSelect={onSelectCategory}
+              />
             </div>
           </div>
           <div className="flex justify-between">
@@ -117,6 +138,7 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
                 type="text"
                 placeholder="Fluffy pancakes..."
                 onChange={handleChange}
+                name="ingredients"
               />
             </div>
           </div>
@@ -127,8 +149,10 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
             <div>
               <Input
                 className="w-[288px] h-[36px]"
-                type="number"
+                type="text"
                 placeholder="Price"
+                name="price"
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -140,7 +164,7 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
               {loading ? (
                 <LoaderCircle className="animate-spin" />
               ) : (
-                "Add category"
+                "Save changes"
               )}
             </Button>
           </DialogFooter>
@@ -152,16 +176,17 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
 
 type CategoriesSelectProps = {
   categories: Category[];
+  onSelect: (categoryId: string) => void;
 };
 
 export function CategoriesSelect(props: CategoriesSelectProps) {
-  const { categories } = props;
+  const { categories, onSelect } = props;
 
   // console.log(categories);
   return (
     <div className="w-[288px] h-[36px]">
       <div>
-        <Select>
+        <Select onValueChange={onSelect}>
           <SelectTrigger className="w-full max-w-48">
             <SelectValue placeholder="Select a fruit" />
           </SelectTrigger>
