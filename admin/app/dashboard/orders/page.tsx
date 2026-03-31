@@ -8,73 +8,54 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-const invoices = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+import { getOrders } from "@/lib/services/getOrders";
 
-export default function OrdersPage() {
+export interface Orders {
+  id: number;
+  userId: number;
+  user: {
+    email: string;
+  };
+  totalPrice: string;
+  status: "PENDING" | "CANCELED" | "DELIVERED";
+  foodOrderItems: {
+    id: number;
+    quantity: number;
+    food: {
+      name: string;
+    };
+  }[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export default async function OrdersPage() {
+  const orders = await getOrders();
+
   return (
     <div>
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="w-[100px]">№</TableHead>
+            <TableHead>Customer</TableHead>
+            <TableHead>Food</TableHead>
+            <TableHead>Date</TableHead>
+            <TableHead className="text-right">Total</TableHead>
+            <TableHead>Delivery Address</TableHead>
+            <TableHead>Delivery state</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((invoice) => (
-            <TableRow key={invoice.invoice}>
-              <TableCell className="font-medium">{invoice.invoice}</TableCell>
-              <TableCell>{invoice.paymentStatus}</TableCell>
-              <TableCell>{invoice.paymentMethod}</TableCell>
-              <TableCell className="text-right">
-                {invoice.totalAmount}
-              </TableCell>
+          {orders.map((order) => (
+            <TableRow key={order.id}>
+              <TableCell className="font-medium">{order.userId}</TableCell>
+              <TableCell>{order.user.email}</TableCell>
+              <TableCell>{order.createdAt}</TableCell>
+              <TableCell>{order.totalPrice}</TableCell>
+              <TableCell>{order.foodOrderItems.length}</TableCell>
+              <TableCell className="text-right">{order.status}</TableCell>
             </TableRow>
           ))}
         </TableBody>
