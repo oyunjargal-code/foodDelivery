@@ -3,13 +3,14 @@ import { prisma } from "../../lib/prisma";
 
 export const getOrders = async (req: Request, res: Response) => {
   try {
-    const order = await prisma.foodOrder.findMany({
+    const orders = await prisma.foodOrder.findMany({
       include: {
         foodOrderItems: true,
+        user: true,
       },
     });
 
-    res.json({ order });
+    res.json({ orders });
   } catch (error) {
     res.status(500).json(error);
   }

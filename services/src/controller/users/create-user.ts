@@ -8,7 +8,7 @@ export const createUser = async (req: Request, res: Response) => {
 
   try {
     const user = await prisma.user.create({
-      data: { email, password: hashedPassword, age },
+      data: { email, password: hashedPassword },
     });
     res.status(200).json([user]);
   } catch (error) {
