@@ -5,8 +5,15 @@ export const getOrders = async (req: Request, res: Response) => {
   try {
     const orders = await prisma.foodOrder.findMany({
       include: {
-        foodOrderItems: true,
-        user: true,
+        foodOrderItems: { include: { food: true } },
+        user: {
+          select: {
+            email: true,
+            id: true,
+            phoneNumber: true,
+            createdAt: true,
+          },
+        },
       },
     });
 

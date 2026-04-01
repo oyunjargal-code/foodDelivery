@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
+  const tokenKey = process.env.TOKEN_KEY;
   const user = await prisma.user.findUnique({
     where: { email },
   });
@@ -23,15 +24,13 @@ export const login = async (req: Request, res: Response) => {
           role: "user",
         },
       },
-      "secret",
+      tokenKey!,
       { expiresIn: "1h" },
     );
     res.status(200).json({ accessToken });
   } else {
     res.status(400).json({ message: "invalid credentials" });
   }
-
-  console.log("result:");
 
   //   try {
   //     const result = await bcrypt.compare(password, "hash");
