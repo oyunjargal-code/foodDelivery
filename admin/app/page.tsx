@@ -8,8 +8,17 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   return (
-    <div>
-      <SignIn />
+    <div className="w-[1440px] mx-auto flex justify-between border border-red-500 h-screen">
+      <div className="w-[416px] p-[376px] border border-red-500 flex items-center">
+        <SignIn />
+      </div>
+      <div className="w-[900px] border border-red-500 overflow-hidden rounded-4xl ">
+        <img
+          src="/images/img.jpg"
+          alt="faceImg"
+          className="h-screen object-cover"
+        />
+      </div>
     </div>
   );
 }
@@ -26,7 +35,16 @@ const SignIn = () => {
     };
 
     try {
-      await signIn(credentials);
+      const res = await fetch("http://localhost:3001/users/auth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (res.status !== 200) return;
+
       router.push("/dashboard/foods");
     } catch (error) {
       console.log(error);
@@ -47,7 +65,7 @@ const SignIn = () => {
         onChange={(event) => setPassword(event.target.value)}
       />
 
-      <Button onClick={onSubmit}>SignIn </Button>
+      <Button onClick={onSubmit}> Sign In </Button>
     </div>
   );
 };

@@ -7,9 +7,17 @@ type SingInResponse = {
 
 export async function POST(request: NextRequest) {
   const credentials = await request.json();
+
   const cookieStore = await cookies();
 
   try {
+    if (!credentials.email || !credentials.password) {
+      return NextResponse.json(
+        { message: "email password required" },
+        { status: 404 },
+      );
+    }
+
     const response = await fetch("http://localhost:3001/users/auth", {
       method: "POST",
       headers: {

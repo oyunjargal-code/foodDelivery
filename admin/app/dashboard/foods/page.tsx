@@ -8,7 +8,7 @@ export default async function FoodsPage() {
   const categories = await getCategories();
 
   return (
-    <div className="w-full">
+    <div className="w-[1440px] mx-auto h-screen">
       <div className="w-[1171px] min-h-[176px] mx-auto rounded-2xl bg-white flex justify-center items-center">
         <Categories categories={categories} />
       </div>
