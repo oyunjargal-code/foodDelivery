@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   return (
     <div className="w-[1440px] mx-auto flex justify-between border border-red-500 h-screen">
-      <div className="w-[416px] p-[376px] border border-red-500 flex items-center">
+      <div className="w-[416px] h-[376px] border border-red-500 flex items-center justify-center mt-100">
         <SignIn />
       </div>
       <div className="w-[900px] border border-red-500 overflow-hidden rounded-4xl ">
