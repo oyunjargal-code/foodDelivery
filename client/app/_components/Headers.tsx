@@ -6,7 +6,7 @@ export const Headers = () => {
         <div className="flex gap-4">
           <div className="mt-10 ml-20">
             <img
-              src="/images/logo.png"
+              src="/images/headerLogo.svg"
               alt="logo"
               className="w-[46px] h-[38px]"
             />
@@ -14,7 +14,7 @@ export const Headers = () => {
           <div className="mt-10 mb-10">
             <p>
               Nom<span className="text-red-700 font-bold">Nom</span>
-              <h1>Swift delivery</h1>
+              <span>Swift delivery</span>
             </p>
           </div>
         </div>
