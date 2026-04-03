@@ -38,6 +38,8 @@ export const ClientFoodsCard = async () => {
   const response = await fetch("http://localhost:3001/categories");
   const data: GetCategoriesResponse = await response.json();
 
+  const addFood = () => {};
+
   return (
     <div className="flex flex-col gap-4 mt-4">
       {data.categories.map((category) => (
