@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { getCategoryById } from "../controller/categories/get-categoryById";
 import { createCategory } from "../controller/categories/create-category";
 import { updateCategory } from "../controller/categories/update-category";
