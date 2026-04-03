@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import { getUsers } from "../controller/users/get-users";
 import { getUserById } from "../controller/users/get-userById";
 import { createUser } from "../controller/users/create-user";

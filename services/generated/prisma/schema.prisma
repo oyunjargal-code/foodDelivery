@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id          Int    @id @default(autoincrement())
+  email       String @unique
+  password    String
+  phoneNumber String @default("Null")
+  address     String @default("")
+  role        Role   @default(USER)
+
+  ttl        DateTime?
+  isVerifies Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @default(now()) @updatedAt
+
+  // role        Role        @default(USER)
+  orders FoodOrder[]
+}
+
+model Food {
+  id          Int    @id @default(autoincrement())
+  name        String
+  price       String
+  image       String @default("")
+  ingredients String @default("")
+
+  category      FoodCategory @relation(fields: [foodCategoyId], references: [id])
+  foodCategoyId Int
+
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  foodOrderItems FoodOrderItems[]
+}
+
+model FoodCategory {
+  id    Int    @id @default(autoincrement())
+  name  String
+  foods Food[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FoodOrder {
+  id     Int @id @default(autoincrement())
+  userId Int
+
+  user           User             @relation(fields: [userId], references: [id])
+  totalPrice     String
+  status         Status           @default(PENDING)
+  foodOrderItems FoodOrderItems[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+}
+
+model FoodOrderItems {
+  id Int @id @default(autoincrement())
+
+  quantity Int
+
+  foodId Int
+  food   Food @relation(fields: [foodId], references: [id])
+
+  order       FoodOrder @relation(fields: [foodOrderId], references: [id])
+  foodOrderId Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  PENDING
+  CANCELED
+  DELIVERED
+}
