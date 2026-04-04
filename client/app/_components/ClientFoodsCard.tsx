@@ -10,6 +10,7 @@ import {
 import { Badge, CirclePlus, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { DialogDemo } from "./FoodsCardDialog";
 
 export interface GetCategoriesResponse {
   categories: Category[];
@@ -38,7 +39,9 @@ export const ClientFoodsCard = async () => {
   const response = await fetch("http://localhost:3001/categories");
   const data: GetCategoriesResponse = await response.json();
 
-  const addFood = () => {};
+  const addFood = () => {
+    <DialogDemo />;
+  };
 
   return (
     <div className="flex flex-col gap-4 mt-4">
@@ -63,7 +66,10 @@ export const ClientFoodsCard = async () => {
                       alt="Event cover"
                       className="aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
                     />
-                    <Button className="rounded-full  absolute left-4/5 top-3/4">
+                    <Button
+                      className="rounded-full  absolute left-4/5 top-3/4"
+                      onClick={addFood}
+                    >
                       <Plus />
                     </Button>
                   </div>
