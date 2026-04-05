@@ -40,7 +40,7 @@ export const ClientFoodsCard = async () => {
   const data: GetCategoriesResponse = await response.json();
 
   const addFood = () => {
-    <DialogDemo />;
+    // <DialogDemo />;
   };
 
   return (
