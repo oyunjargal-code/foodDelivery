@@ -2,15 +2,12 @@ import {
   Card,
   CardAction,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 
-import { Badge, CirclePlus, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { DialogDemo } from "./FoodsCardDialog";
+import { FoodCardDialog } from "./FoodsCardDialog";
+import { Badge } from "lucide-react";
 
 export interface GetCategoriesResponse {
   categories: Category[];
@@ -35,51 +32,47 @@ export interface Food {
   updatedAt: string;
 }
 
-export const ClientFoodsCard = async () => {
-  const response = await fetch("http://localhost:3001/categories");
-  const data: GetCategoriesResponse = await response.json();
+type ClientFoodsCardProps = {
+  categories: Category[];
+};
 
-  const addFood = () => {
-    // <DialogDemo />;
-  };
-
+export const ClientFoodsCard = async ({ categories }: ClientFoodsCardProps) => {
   return (
     <div className="flex flex-col gap-4 mt-4">
-      {data.categories.map((category) => (
+      {categories.map((category) => (
         <div key={category.id} className="flex flex-col">
-          <div className="ml-20">
+          <div className="ml-20 mb-8">
             <h2>
               {category.name} ({category.foods.length})
             </h2>
           </div>
           <div className="flex gap-4 justify-center">
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-3 gap-6">
               {category.foods.map((food) => (
                 <Card
                   key={food.id}
-                  className="relative mx-auto pt-0 w-[270.75px] h-[241px]"
+                  className="w-[397.33px] relative mx-auto pt-0"
                 >
-                  <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
-                  <div className="flex relative">
+                  <div className="absolute inset-0 z-30 aspect-video" />
+                  <div className="flex relative h-[220px]">
                     <img
-                      src="https://avatar.vercel.sh/shadcn1"
-                      alt="Event cover"
-                      className="aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
+                      src={food.image}
+                      alt={food.name}
+                      className="aspect-video w-full object-cover"
                     />
-                    <Button
-                      className="rounded-full  absolute left-4/5 top-3/4"
-                      onClick={addFood}
-                    >
-                      <Plus />
-                    </Button>
+                    <div className="absolute buttom-2 right-2 z-40">
+                      <FoodCardDialog food={food} />
+                    </div>
                   </div>
 
-                  <CardHeader>
-                    <CardAction>
-                      {/* <Badge variant="secondary">{food.price}</Badge> */}
-                    </CardAction>
-                    <CardTitle>{food.name}</CardTitle>
-                    <CardDescription>{food.ingredients}</CardDescription>
+                  <CardHeader className="p-3">
+                    <CardAction className="text-xl">{food.price}</CardAction>
+                    <CardTitle className="text-base font-semibold text-[#EF4444]">
+                      {food.name}
+                    </CardTitle>
+                    <CardDescription className="text-sm">
+                      {food.ingredients}
+                    </CardDescription>
                   </CardHeader>
                 </Card>
               ))}

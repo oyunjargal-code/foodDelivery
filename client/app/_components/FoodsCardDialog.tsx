@@ -1,28 +1,42 @@
 import { Button } from "@/components/ui/button";
 import {
+  Card,
+  CardAction,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Field, FieldGroup } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function DialogDemo() {
+import { Plus } from "lucide-react";
+import { Food } from "./ClientFoodsCard";
+
+type FoodCardDialogProps = {
+  food: Food;
+};
+
+export const FoodCardDialog = ({ food }: FoodCardDialogProps) => {
   return (
     <Dialog>
       <form>
-        <DialogTrigger asChild>
-          <Button variant="outline">Open Dialog</Button>
+        <DialogTrigger>
+          <div className="rounded-full w-[50px] h-[50px] absolute left-82 top-39 bg-[#FFFFFF] text-[#EF4444] p-3 hover:bg-zinc-500 cursor-pointer">
+            <Plus />
+          </div>
         </DialogTrigger>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
             <DialogDescription>
               Make changes to your profile here. Click save when you&apos;re
               done.
@@ -48,4 +62,4 @@ export function DialogDemo() {
       </form>
     </Dialog>
   );
-}
+};
