@@ -36,7 +36,7 @@ export function CategoriesList({ categories }: { categories: Category[] }) {
                     <img
                       src={food.image}
                       alt="Event cover"
-                      className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
+                      className="relative z-20 aspect-video w-full object-cover dark:brightness-40"
                     />
                   ) : (
                     <img

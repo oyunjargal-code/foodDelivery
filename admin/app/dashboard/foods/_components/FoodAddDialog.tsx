@@ -61,11 +61,15 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
     setLoading(true);
     const formData = new FormData();
 
-    if (image === null) return;
+    if (image === null) {
+      setLoading(false);
+      return;
+    }
 
     formData.append("image", image);
 
     const { url }: any = await uploadImage(formData);
+    console.log("Uploaded URL:", url);
 
     if (!url) {
       setLoading(false);
@@ -79,6 +83,7 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
       ingredients: food.ingredients,
       image: url,
     };
+    console.log("Post body:", postBody);
     try {
       await fetch("http://localhost:3001/foods", {
         method: "POST",
