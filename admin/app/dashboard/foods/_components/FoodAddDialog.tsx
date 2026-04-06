@@ -25,6 +25,7 @@ import {
 import { LoaderCircle, Plus } from "lucide-react";
 import { ChangeEvent, ChangeEventHandler, useState } from "react";
 import { Category } from "./types";
+import { uploadImage } from "@/src/lib/upload";
 
 type FoodAddDialogProps = {
   categories: Category[];
@@ -34,7 +35,7 @@ type Food = {
   foodName: string;
   price: string;
   categoryId: null | string;
-  ingredients: String;
+  ingredients: string;
 };
 
 export function FoodAddDialog({ categories }: FoodAddDialogProps) {
@@ -44,12 +45,12 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
     categoryId: null,
     ingredients: ",",
   });
-  console.log(food);
+
+  const [image, setImage] = useState<File | null>(null);
 
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
-  const [categoryName, setCategoryName] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -58,14 +59,26 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
 
   const onAddCategory = async () => {
     setLoading(true);
+    const formData = new FormData();
+
+    if (image === null) return;
+
+    formData.append("image", image);
+
+    const { url }: any = await uploadImage(formData);
+
+    if (!url) {
+      setLoading(false);
+      return;
+    }
 
     const postBody = {
       name: food.foodName,
       price: food.price,
       foodCategoyId: food.categoryId,
       ingredients: food.ingredients,
+      image: url,
     };
-
     try {
       await fetch("http://localhost:3001/foods", {
         method: "POST",
@@ -89,7 +102,7 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
 
   return (
     <div>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button
             variant="outline"
@@ -154,6 +167,27 @@ export function FoodAddDialog({ categories }: FoodAddDialogProps) {
                 name="price"
                 onChange={handleChange}
               />
+            </div>
+          </div>
+          <div className="flex justify-between">
+            <div>
+              <p className="text-sm">Image</p>
+            </div>
+            <div>
+              <Input
+                className="w-[288px] h-[36px]"
+                type="file"
+                placeholder="Price"
+                name="price"
+                onChange={(event) => {
+                  if (event?.target?.files?.[0]) {
+                    setImage(event?.target?.files?.[0]);
+                  }
+                }}
+              />
+              {image && (
+                <img src={URL.createObjectURL(image)} height={100} alt="food" />
+              )}
             </div>
           </div>
           <DialogFooter className="sm:justify-between">
