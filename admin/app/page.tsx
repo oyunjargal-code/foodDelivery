@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   return (
-    <div className="w-[1440px] mx-auto flex justify-between border border-red-500 h-screen">
+    <div className="w-[1440px] mx-auto flex justify-between h-screen">
       <div className="w-[416px] h-[376px] flex items-center justify-center mt-100">
         <SignIn />
       </div>
@@ -35,16 +35,13 @@ const SignIn = () => {
     };
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/auth"`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(credentials),
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/auth`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify(credentials),
+      });
 
       if (res.status !== 200) return;
 
@@ -54,7 +51,7 @@ const SignIn = () => {
     }
   };
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       <Input
         placeholder="Email"
         type="email"
