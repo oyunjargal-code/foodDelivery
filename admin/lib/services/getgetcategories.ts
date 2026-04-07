@@ -5,7 +5,7 @@ export interface GetCategoriesResponse {
 }
 
 export const getCategories = async () => {
-  const data = await fetch("http://localhost:3001/categories");
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
   const { categories }: GetCategoriesResponse = await data.json();
 
   return categories;
