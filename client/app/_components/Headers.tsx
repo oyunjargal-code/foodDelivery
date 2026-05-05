@@ -1,5 +1,20 @@
-import { ShoppingCart, ShoppingCartIcon, UserKey } from "lucide-react";
+"use client";
+
+import { ShoppingCartIcon, UserKey } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { logoutUser } from "@/lib/auth";
+
 export const Headers = () => {
+  const router = useRouter();
+
+  async function handleLogout() {
+    const confirm = window.confirm("Гарахдаа итгэлтэй байна уу?");
+    if (!confirm) return;
+
+    await logoutUser();
+    router.push("/login");
+  }
+
   return (
     <div className="w-[1440px] mx-auto">
       <div className="w-full bg-black text-white mx-auto flex justify-between">
@@ -20,17 +35,10 @@ export const Headers = () => {
             </p>
           </div>
         </div>
-        <div className="flex gap-4  items-center mr-20">
+        <div className="flex gap-4 items-center mr-20">
           <ShoppingCartIcon />
-          <UserKey />
+          <UserKey onClick={handleLogout} className="cursor-pointer" />
         </div>
-
-        {/* <div className="w-full h-17 flex justify-between items-center px-22 py-3">
-        <nav>
-          <a href="/login">Нэвтрэх</a>
-          <a href="/register">Бүртгүүлэх</a>
-        </nav>
-      </div> */}
       </div>
       <div className="h-[570px]">
         <img src="/images/BG.png" alt="BG" />
