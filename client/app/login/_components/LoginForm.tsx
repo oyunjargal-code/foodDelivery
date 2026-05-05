@@ -11,15 +11,18 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     const { ok, data } = await loginUser(email, password);
 
+    console.log("ok:", ok);
+    console.log("data:", data);
+
     if (ok) {
-      router.push("/");
+      window.location.href = "/";
     } else {
       setError(data.message);
     }

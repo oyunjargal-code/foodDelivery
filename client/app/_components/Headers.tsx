@@ -3,16 +3,27 @@
 import { ShoppingCartIcon, UserKey } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { logoutUser } from "@/lib/auth";
+import { useEffect, useState } from "react";
 
 export const Headers = () => {
   const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  async function handleLogout() {
-    const confirm = window.confirm("Гарахдаа итгэлтэй байна уу?");
-    if (!confirm) return;
+  useEffect(() => {
+    const token = document.cookie.includes("token");
+    setIsLoggedIn(token);
+  }, []);
 
-    await logoutUser();
-    router.push("/login");
+  async function handleClick() {
+    if (isLoggedIn) {
+      const confirm = window.confirm("Гарахдаа итгэлтэй байна уу?");
+      if (!confirm) return;
+      await logoutUser();
+      setIsLoggedIn(false);
+      router.push("/login");
+    } else {
+      router.push("/login");
+    }
   }
 
   return (
@@ -37,7 +48,7 @@ export const Headers = () => {
         </div>
         <div className="flex gap-4 items-center mr-20">
           <ShoppingCartIcon />
-          <UserKey onClick={handleLogout} className="cursor-pointer" />
+          <UserKey onClick={handleClick} className="cursor-pointer" />
         </div>
       </div>
       <div className="h-[570px]">
