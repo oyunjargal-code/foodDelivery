@@ -32,32 +32,42 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl w-96">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Нэвтрэх</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-2">Log in</h2>
+      <p className="text-gray-500 text-sm mb-6">
+        Log in to enjoy your favorite dishes.
+      </p>
 
       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
       <div className="mb-4">
-        <label className="block text-sm text-gray-600 mb-1">И-мэйл</label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full border rounded-lg px-3 py-2 text-gray-800"
-          placeholder="example@mail.com"
+          placeholder="Enter your email address"
           required
         />
       </div>
 
-      <div className="mb-6">
-        <label className="block text-sm text-gray-600 mb-1">Нууц үг</label>
+      <div className="mb-2">
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full border rounded-lg px-3 py-2 text-gray-800"
-          placeholder="••••••••"
+          placeholder="Password"
           required
         />
+      </div>
+
+      <div className="text-right mb-6">
+        <a
+          href="/forgot-password"
+          className="text-sm text-gray-500 hover:underline"
+        >
+          Forgot password?
+        </a>
       </div>
 
       <button
@@ -65,8 +75,15 @@ export default function LoginForm() {
         disabled={loading}
         className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 disabled:opacity-50"
       >
-        {loading ? "Түр хүлээнэ үү..." : "Нэвтрэх"}
+        {loading ? "Түр хүлээнэ үү..." : "Let's Go"}
       </button>
+
+      <p className="text-center text-sm text-gray-500 mt-4">
+        Don't have an account?{" "}
+        <a href="/signup" className="text-red-500 hover:underline">
+          Sign up
+        </a>
+      </p>
     </form>
   );
 }
