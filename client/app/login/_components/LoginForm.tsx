@@ -11,7 +11,7 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -31,7 +31,7 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl w-96">
+    <div className="bg-white p-8 rounded-xl w-96">
       <h2 className="text-2xl font-bold text-gray-800 mb-2">Log in</h2>
       <p className="text-gray-500 text-sm mb-6">
         Log in to enjoy your favorite dishes.
@@ -71,7 +71,7 @@ export default function LoginForm() {
       </div>
 
       <button
-        type="submit"
+        onClick={handleSubmit}
         disabled={loading}
         className="w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 disabled:opacity-50"
       >
@@ -84,6 +84,6 @@ export default function LoginForm() {
           Sign up
         </a>
       </p>
-    </form>
+    </div>
   );
 }

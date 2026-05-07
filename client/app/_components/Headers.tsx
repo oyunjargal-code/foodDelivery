@@ -2,16 +2,18 @@
 
 import { ShoppingCartIcon, UserKey } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { logoutUser } from "@/lib/auth";
+import { logoutUser, getEmailFromToken } from "@/lib/auth";
 import { useEffect, useState } from "react";
 
 export const Headers = () => {
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const token = document.cookie.includes("token");
     setIsLoggedIn(token);
+    setEmail(getEmailFromToken());
   }, []);
 
   async function handleClick() {
@@ -47,6 +49,7 @@ export const Headers = () => {
           </div>
         </div>
         <div className="flex gap-4 items-center mr-20">
+          {email && <span className="text-sm text-white">{email}</span>}
           <ShoppingCartIcon />
           <UserKey onClick={handleClick} className="cursor-pointer" />
         </div>

@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/card";
 
 import { FoodCardDialog } from "./FoodsCardDialog";
-import { Badge } from "lucide-react";
 
 export interface GetCategoriesResponse {
   categories: Category[];
@@ -53,14 +52,13 @@ export const ClientFoodsCard = async ({ categories }: ClientFoodsCardProps) => {
                   key={food.id}
                   className="w-[397.33px] relative mx-auto pt-0"
                 >
-                  <div className="absolute inset-0 z-30 aspect-video" />
                   <div className="flex relative h-[220px]">
                     <img
                       src={food.image}
                       alt={food.name}
                       className="aspect-video w-full object-cover"
                     />
-                    <div className="absolute buttom-2 right-2 z-40">
+                    <div className="absolute bottom-2 right-2 z-40">
                       <FoodCardDialog food={food} />
                     </div>
                   </div>
