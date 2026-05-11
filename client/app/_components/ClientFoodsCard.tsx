@@ -35,7 +35,7 @@ type ClientFoodsCardProps = {
   categories: Category[];
 };
 
-export const ClientFoodsCard = async ({ categories }: ClientFoodsCardProps) => {
+export const ClientFoodsCard = ({ categories }: ClientFoodsCardProps) => {
   return (
     <div className="flex flex-col gap-4 mt-4">
       {categories.map((category) => (

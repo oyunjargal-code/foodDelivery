@@ -10,6 +10,7 @@ import {
 import { Plus, Minus } from "lucide-react";
 import { Food } from "./ClientFoodsCard";
 import { useState } from "react";
+import { useCart } from "../context/CartContext";
 
 type FoodCardDialogProps = {
   food: Food;
@@ -17,15 +18,19 @@ type FoodCardDialogProps = {
 
 export const FoodCardDialog = ({ food }: FoodCardDialogProps) => {
   const [quantity, setQuantity] = useState(1);
+  const [open, setOpen] = useState(false);
+  const { addToCart } = useCart();
 
-  const totalPrice = (parseFloat(food.price) * quantity).toFixed(2);
+  const totalPrice = (
+    parseFloat(food.price.replace(/[^0-9.]/g, "")) * quantity
+  ).toFixed(2);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div className="rounded-full w-[50px] h-[50px] absolute left-82 top-39 bg-[#FFFFFF] text-[#EF4444] p-3 hover:bg-zinc-500 cursor-pointer">
+        <button className="rounded-full w-[50px] h-[50px] bg-[#FFFFFF] text-[#EF4444] p-3 hover:bg-zinc-500 cursor-pointer flex items-center justify-center absolute bottom-2 right-3">
           <Plus />
-        </div>
+        </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <div className="flex flex-col gap-4">
@@ -66,7 +71,10 @@ export const FoodCardDialog = ({ food }: FoodCardDialogProps) => {
         <DialogFooter>
           <Button
             className="w-full bg-[#EF4444] text-white hover:bg-red-600"
-            onClick={() => alert("Cart-д нэмлээ!")}
+            onClick={() => {
+              addToCart(food, quantity);
+              setOpen(false);
+            }}
           >
             Add to cart
           </Button>
