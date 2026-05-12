@@ -1,20 +1,12 @@
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { getOrders } from "@/lib/services/getOrders";
+import OrdersTable from "./_components/OrdersTable";
 
 export interface Orders {
   id: number;
   userId: number;
   user: {
     email: string;
+    address: string;
   };
   totalPrice: string;
   status: "PENDING" | "CANCELED" | "DELIVERED";
@@ -23,6 +15,7 @@ export interface Orders {
     quantity: number;
     food: {
       name: string;
+      image: string;
     };
   }[];
   createdAt: string;
@@ -31,53 +24,11 @@ export interface Orders {
 
 export default async function OrdersPage() {
   const orders = await getOrders();
-  console.log(orders);
 
   return (
-    <div className="w-[1440px] mx-auto h-screen flex flex-col items-center">
-      <div className="w-[1171px] h-[76px] bg-white border border-red-500 mb-2">
-        <div>
-          <h1>Orders</h1>
-        </div>
-        <div>
-          <p>Date</p>
-          <button>Change delivery state</button>
-        </div>
-      </div>
-      <div className="w-[1171px] h-screen bg-white border border-red-500">
-        <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">№</TableHead>
-              <TableHead>Customer</TableHead>
-              <TableHead>Food</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead className="text-right">Total</TableHead>
-              <TableHead>Delivery Address</TableHead>
-              <TableHead>Delivery state</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {orders.map((order) => (
-              <TableRow key={order.id}>
-                <TableCell className="font-medium">{order.userId}</TableCell>
-                <TableCell>{order.user.email}</TableCell>
-                <TableCell>{order.createdAt}</TableCell>
-                <TableCell>{order.totalPrice}</TableCell>
-                <TableCell>{order.foodOrderItems.length}</TableCell>
-                <TableCell className="text-right">{order.status}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
-              <TableCell className="text-right">$2,500.00</TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </div>
+    <div className="p-8 w-full">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800">Orders</h1>
+      <OrdersTable orders={orders} />
     </div>
   );
 }
