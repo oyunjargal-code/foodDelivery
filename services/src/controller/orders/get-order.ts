@@ -11,12 +11,12 @@ export const getOrders = async (req: Request, res: Response) => {
             email: true,
             id: true,
             phoneNumber: true,
+            address: true,
             createdAt: true,
           },
         },
       },
     });
-
     res.json({ orders });
   } catch (error) {
     res.status(500).json(error);
