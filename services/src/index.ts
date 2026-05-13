@@ -6,7 +6,7 @@ import foodsRouter from "./router/foods.router";
 import ordersRouter from "./router/orders.router";
 
 const server = express();
-server.use(cors({ origin: "http://localhost:3000" }));
+server.use(cors({ origin: "*" }));
 const port = 3001;
 
 server.use(express.json());
